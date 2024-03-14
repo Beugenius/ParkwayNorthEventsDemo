@@ -1,0 +1,12 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.Scheduling.IndexModel
+@using Infrastructure.Utility;
+@{
+}
+<div class="container">
+    <a asp-page="Consultation" class="btn">Consultation</a>
+    @if (User.IsInRole(SD.ClientRole) || User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+    {
+        <a asp-page="Event" class="btn">Book an Event</a>
+    }
+</div>

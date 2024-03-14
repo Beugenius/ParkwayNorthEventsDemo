@@ -1,0 +1,61 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.Gallery.AddImageModel
+@using Infrastructure.Utility; 
+@{
+}
+@if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+{
+    <form method="post" asp-action="AddImage" enctype="multipart/form-data">
+        <div class="container">
+            <div class="form-group row">
+                <input type="hidden" asp-for="SelectedGallery.Id" />
+                <div>
+                    <label asp-for="SelectedGallery.NameOfEvent"></label>
+                    <input class="form-control" asp-for="SelectedGallery.NameOfEvent" disabled />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div id="files">
+                    <input type="file" class="form-control fileInput mt-3" name="image">
+                </div>
+            </div>
+            <a onclick="AddRow()"><i class="fa-solid fa-plus"></i></a>
+            <div class="form-group row">
+                <div>
+                    <button type="submit" class="btn btn-primary parkwayButton">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <form method="post" asp-action="AddImage">
+        <input type="hidden" asp-for="SelectedGallery.Id" />
+        <div>
+            <button type="submit" asp-page-handler="back" class="btn btn-primary parkwayButton">Back</button>
+        </div>
+    </form>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadInitial();
+        });
+
+        function AddRow() {
+            // get the div where the file upload is
+            var count = document.querySelectorAll("fileInput").length + 1;
+            var fileDiv = document.getElementById("files");
+            // create a new input 
+            var newInput = document.createElement("input");
+            newInput.type = "file";
+            newInput.classList.add("form-control"); 
+            newInput.classList.add("fileInput");
+            newInput.classList.add("mt-3");
+            newInput.name = "image" + count;
+            newInput.required = true; 
+            // append input as child 
+            fileDiv.appendChild(newInput);
+        }
+    </script>
+}

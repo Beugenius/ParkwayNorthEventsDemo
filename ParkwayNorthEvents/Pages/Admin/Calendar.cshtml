@@ -1,0 +1,20 @@
+﻿@page
+@using ApplicationCore.Models;
+@using Infrastructure.Utility;
+@model ParkwayNorthEvents.Pages.Admin.CalendarModel
+@{
+}
+@if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+{
+    <div id='calendar'></div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-danger">You are not authorized to view this page.</h2>
+    </div>
+}
+@section Scripts {
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+    <script src="~/js/calendarupdate.js"></script>
+}

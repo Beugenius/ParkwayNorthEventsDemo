@@ -1,0 +1,238 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.User.MyEvents.EditModel
+@{
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Contact Information</h3>
+            <p class="card-text"><i class="fa-regular fa-user"></i>&nbsp; @Model.Client.FullName</p>
+            <p class="card-text">
+                <i class="fa-solid fa-phone"></i>&nbsp; @Model.Client.PhoneNumber
+            </p>
+            <p class="card-text">
+                <i class="fa-solid fa-at"></i>&nbsp; @Model.Client.Email
+            </p>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div id="editBookingForm" style="display: none;" class="card mx-3 col-sm-6 mb-3">
+                    <div class="card-text mx-2 mt-2">
+                        Name of Event
+                    </div>
+                    <div class="card-text mx-2 mt-2">
+                        <input id="eventTitleUpdate" class="form-control mt-3" type="text" required value="@Model.SelectedBooking.EventTitle" />
+                    </div>
+                    <div class="card-text mx-2 mt-2">
+                        Description
+                    </div>
+                    <div class="card-text mx-2 mt-2">
+                        <textarea id="descriptionUpdate" class="form-control" style="resize: none;" placeholder="@Model.SelectedBooking.Description" required>@Model.SelectedBooking.Description</textarea>
+                    </div>
+                    <p class="card-text mb-3 mt-2 custom-save-button-alignment">
+                        <a onClick="SaveBookingChanges('@Model.SelectedBooking.BookingId')"><i class="fa-regular fa-floppy-disk fa-xl"></i></a>
+                        <a onClick="CancelBookingChanges()"><i class="fa-solid fa-x fa-xl"></i></a>
+                    </p>
+                </div>
+                <h3 id="eventTitle" class="card-title hidden-button">
+                    @Model.SelectedBooking.EventTitle
+                    <a class="" onClick="EditBooking()"><i class="fa-regular fa-pen-to-square mx-3"></i></a>
+                </h3>
+            </div>
+            <p id="bookingType" class="card-text">Type: @Model.GetBookingTypeString(Model.SelectedBooking.Type)</p>
+            <p id="bookingBalance" class="card-text">Balance: $@String.Format("{0:N2}",Model.SelectedBooking.Balance)</p>
+            <p id="bookingStatus" class="card-text">Status: @Model.SelectedBooking.BookingStatus</p>
+            <p id="bookingDate" class="card-text">Date: @Model.SelectedBooking.DateOfEvent.ToShortDateString()</p>
+            <p id="bookingTime" class="card-text">Time: @Model.SelectedBooking.DateOfEvent.TimeOfDay.ToString()</p>
+            <p id="bookingDescription" class="card-text">@Model.SelectedBooking.Description</p>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <h3 class="card-text mx-3 mt-3 mb-3">
+            Venues <a id="AddVenuePlus" onclick="AddVenue('@Model.SelectedBooking.BookingId')"> <i class="fa-solid fa-plus"></i></a>
+        </h3>
+        @*add new venue form*@
+        <div class="card mx-3 col-sm-4 mb-3" style="display: none;" id="AddNewVenueForm">
+            <div class="card-text mx-2 mt-2">
+                Venue Name
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input id="AddVenueName" class="form-control" required />
+            </div>
+            <div class="card-text mx-2 mt-2">
+                Venue Phone Number
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input oninput="phoneNumValidate(event)" id="AddVenuePhoneNumber" maxlength="10" minlength="10" type="tel" class="form-control" required />
+            </div>
+            @{
+                var newGuid = new Guid().ToString();
+            }
+            <p class="card-text mb-3 mt-2 custom-save-button-alignment">
+                <a onClick="SaveAddVenue('@Model.SelectedBooking.BookingId', '@newGuid')"><i class="fa-regular fa-floppy-disk fa-xl"></i></a>
+                <a onClick="CancelAddVenue()"><i class="fa-solid fa-x fa-xl"></i></a>
+            </p>
+        </div>
+
+        @*edit venue form*@
+        <div class="card mx-3 col-sm-4 mb-3" style="display: none;" id="EditVenueForm">
+            <div class="card-text mx-2 mt-2">
+                Venue Name
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input id="EditVenueName" class="form-control" required />
+            </div>
+            <div class="card-text mx-2 mt-2">
+                Venue Phone Number
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input oninput="phoneNumValidate(event)" id="EditVenuePhoneNumber" maxlength="10" minlength="10" type="tel" class="form-control" required />
+            </div>
+            <p class="card-text mb-3 mt-2 custom-save-button-alignment">
+                <a id="saveVenueLink"><i class="fa-regular fa-floppy-disk fa-xl"></i></a>
+                <a onClick="CancelEditVenue()"><i class="fa-solid fa-x fa-xl"></i></a>
+            </p>
+        </div>
+
+        @if (Model.VenuesList is not null && Model.VenuesList.Any())
+        {
+            @foreach (var venue in Model.VenuesList)
+            {
+                var bookedVenue = Model.VenuesBookedList.Where(x => x.VenueId == venue.VenueId).Select(x => x).First();
+                <div class="card mt-2 mb-2 col-sm-3 mx-3" id="@bookedVenue.Id">
+                    @{
+                        string venueNameId = $"VenueName{bookedVenue.Id}";
+                        string venuePhoneId = $"VenuePhone{bookedVenue.Id}";
+                    }
+                    <h5 class="card-title mt-2 mx-2">
+                        <span>
+                            <span id="@venueNameId">@venue.VenueName</span>
+                            <a class="" onClick="EditVenue('@bookedVenue.Id', '@Model.SelectedBooking.BookingId')"><i class="fa-regular fa-pen-to-square mx-1"></i></a>
+                            <a class="" onClick="Delete('/api/venuesBooked/@bookedVenue.Id')"><i class="fa-solid fa-trash"></i></a>
+                        </span>
+                    </h5>
+
+                    <p class="card-text mx-2">
+                        <i class="fa-solid fa-phone">&nbsp;</i><span id="@venuePhoneId">@venue.VenuePhoneNumber</span>
+                    </p>
+                    <p class="card-text mx-2 mb-2">Status: @bookedVenue.Status</p>
+                </div>
+            }
+        }
+        else
+        {
+
+            <p id="pNoVenue" class="card-text">No Venue Booked</p>
+        }
+    </div>
+    <br />
+    <div class="card">
+        <h3 class="card-text mx-3 mt-3 mb-3">
+            Suppliers <a id="AddSuppliersPlus" onclick="AddSupplier('@Model.SelectedBooking.BookingId')"> <i class="fa-solid fa-plus"></i></a>
+        </h3>
+        @*add supplier form*@
+        <div class="card mx-3 col-sm-4 mb-3" style="display: none;" id="AddSupplierForm">
+            <div class="card-text mt-2 mx-2 mt-2">
+                Suppler Name
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input id="AddSupplierName" class="form-control" required />
+            </div>
+            <div class="card-text mx-2 mt-2">
+                SupplierPhoneNumber
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input oninput="phoneNumValidate(event)" id="AddSupplierPhoneNumber" maxlength="10" minlength="10" type="tel" class="form-control" required />
+            </div>
+            <p class="card-text mb-3 mt-2 custom-save-button-alignment">
+                <a onClick="SaveAddSupplier('@Model.SelectedBooking.BookingId', '@newGuid')"><i class="fa-regular fa-floppy-disk fa-xl"></i></a>
+                <a onClick="CancelAddSupplier()"><i class="fa-solid fa-x fa-xl"></i></a>
+            </p>
+        </div>
+        @*edit supplier form *@
+        <div class="card mx-3 col-sm-4 mb-3" style="display: none;" id="EditSupplierForm">
+            <div class="card-text mt-2 mx-2 mt-2">
+                Suppler Name
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input id="EditSupplierName" class="form-control" required />
+            </div>
+            <div class="card-text mx-2 mt-2">
+                SupplierPhoneNumber
+            </div>
+            <div class="card-text mx-2 mt-2">
+                <input oninput="phoneNumValidate(event)" id="EditSupplierPhoneNumber" maxlength="10" minlength="10" type="tel" class="form-control" required />
+            </div>
+            <p class="card-text mb-3 mt-2 custom-save-button-alignment">
+                <a id="saveSupplierLink"><i class="fa-regular fa-floppy-disk fa-xl align-self-end "></i></a>
+                <a onClick="CancelEditSupplier()"><i class="fa-solid fa-x fa-xl align-self-end "></i></a>
+            </p>
+        </div>
+        @if (Model.SupplierList is not null && Model.SupplierList.Count >= 1)
+        {
+            @foreach (var supplier in Model.SupplierList)
+            {
+                var bookedSupplier = Model.ServicesBookedList.Where(x => x.BookingId == Model.SelectedBooking.BookingId.ToString() && x.SupplierId == supplier.SupplierId.ToString()).First();
+                string SupplierNameId = $"SupplierName{bookedSupplier.Id}";
+                string SupplierPhoneId = $"SupplierPhone{bookedSupplier.Id}";
+                <div id="@bookedSupplier.Id" class="card mt-2 mb-2 col-sm-3 mx-3">
+                    <h5 class="card-title mt-2 mx-2">
+                        <span>
+                            <span id="@SupplierNameId">@supplier.SupplierName</span>
+                            <a class="" onClick="EditSupplier('@bookedSupplier.Id', '@Model.SelectedBooking.BookingId')"><i class="fa-regular fa-pen-to-square mx-1"></i></a>
+                            <a class="" onClick="Delete('/api/servicesbooked/@bookedSupplier.Id')"><i class="fa-solid fa-trash"></i></a>
+                        </span>
+                    </h5>
+                    <p class="card-text mx-2 mt-2">
+                        <i class="fa-solid fa-phone">&nbsp;</i><span id="@SupplierPhoneId">@supplier.SupplierPhoneNumber</span>
+                    </p>
+                    <p class="card-text mx-2 mt-2 mb-2">Status: @bookedSupplier.ServiceStatus</p>
+                </div>
+                <br />
+            }
+        }
+        else
+        {
+            <p id="pNoSupplier" class="card-text">No Suppliers Booked</p>
+        }
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h3 class="card-title">Payments & History</h3>
+            @if (Model.TransactionList.Any())
+            {
+                foreach (var transaction in Model.TransactionList)
+                {
+                    <div class="card-text mb-3">
+                        <div class="col">
+                            <label>Date: @transaction.TransactionDate</label>
+                        </div>
+                        <div class="col">
+                            <label>Amount: $@transaction.TransactionAmount</label>
+                        </div>
+                        <div class="col">
+                            <label>Status: @transaction.Status</label>
+                        </div>
+                    </div>
+                }
+            }
+            @if (Model.SelectedBooking.Balance > 0.00M)
+            {
+                <div class="card-text ">
+                    <form asp-page-handler="payment" method="post">
+                        <button type="submit" class="btn-primary parkwayButton"><i class="fa-solid fa-wallet"></i>Make a payment</button>
+                        <input type="hidden" asp-for="@Model.SelectedBooking.BookingId" />
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/userbookingupdate.js"></script>
+    <script src="~/js/venuesbookedupdate.js"></script>
+    <script src="~/js/supplierbookedupdate.js"></script>
+    }

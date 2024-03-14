@@ -1,0 +1,26 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.Admin.Roles.UpdateModel
+@using Infrastructure.Utility;
+@{
+}
+@if (User.IsInRole(SD.AdminRole))
+{
+    <div class="container">
+        <form class="form" method="post">
+            <div class="row">
+                <input type="hidden" value="@Model.Role.Id" asp-for="@Model.Role.Id" />
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Role.Name">Role</label>
+                    <input class="form-control" asp-for="@Model.Role.Name" value="@Model.Role.Name" />
+                </div>
+            </div>
+            <button type="submit">@(Model.Role.Name is null ? "Create" : "Update")</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-danger">You are not authorized to view this page. Contact an admin.</h2>
+    </div>
+}

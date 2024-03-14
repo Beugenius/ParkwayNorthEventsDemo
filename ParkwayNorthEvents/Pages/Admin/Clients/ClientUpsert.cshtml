@@ -1,0 +1,50 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.Admin.Clients.ClientsUpsertModel
+@{
+}
+
+<form method="post" asp-action="ClientUpsert">
+    <div class="container mt-0">
+        <div class="form-group row">
+            <div class="col-1 pt-3 pb-3">
+                <label asp-for="ClientObject.FirstName"></label>
+            </div>
+            <div class="col-2 pt-3">
+                <input class="form-control" asp-for="ClientObject.FirstName" />
+                <span class="text-danger" asp-validation-for="ClientObject.FirstName"></span>
+            </div>
+            <div class="col-1 pt-3 pb-3">
+                <label asp-for="ClientObject.LastName"></label>
+            </div>
+            <div class="col-2 pt-3">
+                <input class="form-control" asp-for="ClientObject.LastName" />
+                <span class="text-danger" asp-validation-for="ClientObject.LastName"></span>
+            </div>
+            <div class="col-1 pt-3">
+                <label asp-for="ClientObject.PhoneNumber"></label>
+            </div>
+            <div class="col-2 pt-3">
+                <input class="form-control" asp-for="ClientObject.PhoneNumber" required data-val-regex="Please enter valid phone number" data-val-regex-pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" />
+                <span class="text-danger" asp-validation-for="ClientObject.PhoneNumber"></span>
+            </div>
+            <input type="hidden" asp-for="ClientObject.Id" />
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-1 pt-3">
+                <label asp-for="ClientObject.Email"></label>
+            </div>
+            <div class="col-3 pt-3">
+                <input class="form-control" asp-for="ClientObject.Email" />
+                <span class="text-danger" asp-validation-for="ClientObject.Email"></span>
+            </div>
+
+
+            <div class="col-1 pt-3">
+                <a class="btn parkwayButton" asp-page="/Admin/Clients/Clients">Clients</a>
+            </div>
+            <div class="col-1 pt-3">
+                <button type="submit" class="btn parkwaySuccess form-control">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>

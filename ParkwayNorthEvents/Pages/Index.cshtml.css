@@ -1,0 +1,8 @@
+﻿body {
+    background-image: url(~/wwwroot/images/ParkwayNorthWall.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+}
+main {
+    background: none !important;
+}

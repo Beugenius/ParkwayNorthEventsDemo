@@ -1,0 +1,207 @@
+html {
+    font-size: 14px;
+    /*background-image: url(../images/ParkwayNorthWall.jpg);
+    background-attachment: fixed;
+    background-size: cover;*/
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    overflow-x: hidden;
+}
+
+header > p {
+    color: #fafbe8;
+}
+
+.navbar, .nav-item, .footer, .nav-link, btn.link, .navbar-brand {
+    background-color: #171719;
+    color: #D4CB78;
+}
+
+    .navbar-brand:hover, .nav-link:hover, a:hover, i:hover {
+        color: #D4CB78;
+        box-shadow: 0px, 4px, 4px 0px, #D4CB78;
+    }
+
+#parkwayNorthNavBrand {
+    height: 60px;
+}
+
+.required-star:after {
+    content: "*";
+    color: red;
+}
+
+body {
+    background-image: url(../images/ParkwayNorthWall.jpg) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    border: 1px solid black;
+}
+
+main {
+    background-image: none;
+    background-color: #171719
+}
+
+/*#region Buttons*/
+.parkwayButton {
+    border: #807a5e 1px solid !important;
+    background-color: #f4f018 !important;
+    color: #0c0c0c !important;
+}
+
+.parkwaySuccess {
+    border: #807a5e 1px solid !important;
+    width: 100% !important;
+    background-color: #a7ff00 !important;
+    color: #0c0c0c !important;
+}
+
+.parkwayDeleteButton {
+    border: #807a5e 1px solid !important;
+    width: 100% !important;
+    background-color: #dd0000 !important;
+    color: #000000 !important;
+}
+/*#endregion*/
+
+.dropdown-menu {
+    background-color: #171719;
+    border: 1px solid #D4CB78;
+}
+
+    .dropdown-menu > a {
+        border-bottom: 1px solid #D4CB78;
+        min-height: 16.67%;
+        max-height: 16.67%;
+    }
+
+        .dropdown-menu > a:last-of-type {
+            border-bottom: none;
+        }
+
+.dropdown-toggle:active, .dropdown-toggle:hover, .dropdown-toggle:visited {
+    color: #D4CB78;
+}
+
+/*#region Gallery*/
+.galleryCard > img {
+    width: 283px;
+    height: 189px;
+}
+/*#endregion*/
+
+@media (max-width: 480px) {
+    .text {
+        font-size: 16px;
+    }
+}
+
+/*#region consultation page*/
+#consultationCard input {
+    width: 70%;
+}
+/*#endregion*/
+
+/*#region card delete / edit buttons */
+.hidden-button:hover + .on-hover-card-buttons {
+    opacity: .5;
+}
+
+    .hidden-button:hover + .on-hover-card-buttons + .on-hover-card-edit-buttons {
+        opacity: .5;
+    }
+
+.on-hover-card-buttons:hover {
+    opacity: 1;
+}
+
+.on-hover-card-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 1;
+}
+
+.on-hover-card-edit-buttons {
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    opacity: 1;
+}
+
+    .on-hover-card-edit-buttons:hover {
+        opacity: 1;
+    }
+
+
+.card {
+    background-color: #171719;
+    color: white;
+}
+
+td, th, tbody, h1, h2, h3, h4, h5, a, label {
+    color: #fafbe8;
+}
+
+input, .form-control, button {
+    background-color: #fafbe8;
+}
+/*#endregion */
+
+/*#region view booking edit / delete buttons*/
+
+.hidden-button:hover > .on-hover-booking-buttons {
+    opacity: .5;
+}
+
+    .hidden-button:hover > .on-hover-booking-buttons:hover {
+        opacity: 1;
+    }
+
+.on-hover-booking-buttons:hover {
+    opacity: 1;
+}
+
+.on-hover-booking-buttons {
+    opacity: 0;
+}
+
+/*#endregion */
+
+.btn-success {
+    color: black;
+}
+
+.card {
+    outline: 1px solid white;
+    border-radius: 6px;
+}
+
+body > div > main > form:nth-child(1) > div > a > i {
+    color: white;
+}
+
+.custom-save-button-alignment {
+    margin-right: 0.3rem;
+    margin-left: auto;
+    width: 3rem;
+}
+.custom-save-button-alignment-gallery {
+    margin-right: 0;
+    margin-left: auto;
+    width: 3rem;
+}

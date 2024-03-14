@@ -1,0 +1,112 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.User.Pay.PayModel
+@using Infrastructure.Services;
+@using Infrastructure.Utility;
+@using Microsoft.Extensions.Options;
+@inject IOptions<Infrastructure.Services.StripeSettings> Stripe
+
+@{
+}
+
+<form method="post">
+    @if (Model.SelectedBooking.Balance > 0.00M)
+    {
+        
+        <div class="container">
+            <div class="card">
+                <div class="card-header container">
+                    Payment Summary
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-info">Payment Details:</span>
+                        </h4>
+                    </div>
+                    <div class="row">
+                        <label>Name of Event: @Model.SelectedBooking.EventTitle</label>
+                    </div>
+                    <div class="row">
+                        <label>Payment Date: @DateTime.Now.Date.ToString("MM/dd/yyyy")</label>
+                    </div>
+                    <div class="row">
+                        <label>Amount To Pay: $@Model.TransactionDetails.TransactionAmount</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-12 col-md-4 offset-md-8">
+                        @{
+                            var OrderTotalForStripe = Math.Round((Model.TransactionDetails.TransactionAmount * 100), 0);
+                        }
+                        <script src="https://checkout.stripe.com/checkout.js"
+                                class="stripe-button"
+                                data-key="@Stripe.Value.PublishableKey"
+                                data-amount="@OrderTotalForStripe"
+                                data-name="Parkway North Events"
+                                data-label="Place Order"
+                                data-description="Event Payment"
+                                data-locale="auto"
+                                data-allow-remember-me="false"
+                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"></script>
+
+                        <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
+                        <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Pay $@Model.TransactionDetails.TransactionAmount</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" asp-for="@Model.SelectedBooking.BookingId" />
+        <input type="hidden" asp-for="@Model.TransactionDetails.TransactionId" />
+        <input type="hidden" asp-for="@Model.TransactionDetails.BookingId" />
+        <input type="hidden" asp-for="@Model.TransactionDetails.TransactionAmount" />
+    }
+</form>
+<div class="">
+    @*TODO - figure out how to go back to booking*@
+    <a asp-page="/User/MyEvents/Edit" asp-route-id="@Model.SelectedBooking.BookingId" class="btn btn-primary parkwayButton">Back to event</a>
+</div>
+
+@section Scripts {
+    @*<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=ASzfoxaOqV8tb3Pr1od0E1Zi-hvKGy8okFkfbG5zEr6dPW5BrIndunCmg3_jQVNxH6s5u0NcZZRWiqw9"
+            data-client-token="@Model._clientToken">
+    </script>
+    <script src="https://js.braintreegateway.com/web/3.91.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.91.0/js/hosted-fields.min.js"></script>
+    <script src="~/js/PayPal.js"></script>*@
+
+    <script>
+        //$(function () {
+        //    $("#datepicker").datepicker({ minDate: 1, maxDate: "+1W" });
+        //    $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00 PM', step: '30' });
+        //});
+
+
+        //function validateInput() {
+        //    var time = document.getElementById("timepicker").value;
+        //    var dt = document.getElementById("datepicker").value;
+        //    var name = document.getElementById("txtName").value;
+        //    var phone = document.getElementById("txtPhone").value;
+
+        //    if (dt.toString() == '') {
+        //        swal("Error", "Please select Delivery Date", "error");
+        //        return false;
+        //    }
+        //    if (time.toString() == '') {
+        //        swal("Error", "Please select Delivery Time", "error");
+        //        return false;
+        //    }
+        //    if (name.toString() == '') {
+        //        swal("Error", "Please enter a Name", "error");
+        //        return false;
+        //    }
+        //    if (phone.toString() == '') {
+        //        swal("Error", "Please enter Phone Number", "error");
+        //        return false;
+        //    }
+        //    return true;
+        }</script>
+
+}

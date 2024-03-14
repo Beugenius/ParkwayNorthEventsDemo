@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkwayNorthEvents", "ParkwayNorthEvents\ParkwayNorthEvents.csproj", "{E4226A91-2513-4A8F-B66F-C33DBBDDE2F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01DD9A42-2360-4749-8C86-50EDDA76F175} = {01DD9A42-2360-4749-8C86-50EDDA76F175}
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4} = {B9FDDDEF-0703-4E0E-BB2E-341A112890F4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{01DD9A42-2360-4749-8C86-50EDDA76F175}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4} = {B9FDDDEF-0703-4E0E-BB2E-341A112890F4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{B9FDDDEF-0703-4E0E-BB2E-341A112890F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkwayNorthTests", "ParkwayNorthTests\ParkwayNorthTests.csproj", "{F7561E4B-3904-4020-A055-42B29CF1F1B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4226A91-2513-4A8F-B66F-C33DBBDDE2F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4226A91-2513-4A8F-B66F-C33DBBDDE2F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4226A91-2513-4A8F-B66F-C33DBBDDE2F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4226A91-2513-4A8F-B66F-C33DBBDDE2F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DD9A42-2360-4749-8C86-50EDDA76F175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DD9A42-2360-4749-8C86-50EDDA76F175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DD9A42-2360-4749-8C86-50EDDA76F175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DD9A42-2360-4749-8C86-50EDDA76F175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FDDDEF-0703-4E0E-BB2E-341A112890F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7561E4B-3904-4020-A055-42B29CF1F1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7561E4B-3904-4020-A055-42B29CF1F1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7561E4B-3904-4020-A055-42B29CF1F1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7561E4B-3904-4020-A055-42B29CF1F1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07492C07-899E-4DC6-A5DD-7074FF6AAAED}
+	EndGlobalSection
+EndGlobal

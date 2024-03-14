@@ -1,0 +1,23 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.User.Pay.AmountModel
+@{
+}
+<div class="container">
+    <form asp-page-handler="payment" method="post">
+        <h3>How much do you want to pay today?</h3>
+        <div class="row">
+            <div class="col-sm-3">
+                <label>Amount:</label>
+            </div>
+            <div class="col-sm-3">
+                <input id="ChargeAmount" class="form-control" asp-for="Amount" type="number" step=".01" min=".5" max="@Model.SelectedBooking.Balance" />
+            </div>
+            <div class="col-sm-3">
+
+                <button type="submit" class="btn-primary parkwayButton"><i class="fa-solid fa-wallet"></i>Make a payment</button>
+                <input type="hidden" asp-for="@Model.SelectedBooking.BookingId" />
+            </div>
+        </div>
+    </form>
+
+</div>

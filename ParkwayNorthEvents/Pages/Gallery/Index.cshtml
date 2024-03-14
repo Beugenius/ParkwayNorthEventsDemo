@@ -1,0 +1,46 @@
+﻿@page
+@using Infrastructure.Utility;
+@model ParkwayNorthEvents.Pages.Gallery.IndexModel
+@{
+}
+
+<div class="container mt-3">
+    <div class="pt-lg-3 pb-lg-5">
+        <h1 class="text-center">
+            Welcome to our Gallery!
+            @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+            {
+                <a class="btn btn-primary parkwayButton" asp-page="/Gallery/CreateNew">Create New</a>
+            }
+        </h1>
+    </div>
+
+    <div class="card-columns" style="display: flex; justify-content: space-between; flex-wrap:wrap">
+        @foreach (var gallery in Model.Galleries)
+        {
+            <div class="card col-sm-6">
+                <div class="card-body" id="@gallery.Id">
+                    <h3 class="card-text">
+                        <span>@gallery.NameOfEvent</span>
+                        @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+                        {
+                            <span>
+                                <a onClick="DeleteImage('/api/gallery/@gallery.Id')"><i class="fa-solid fa-trash "></i></a>
+                                <a onClick="Edit('@gallery.Id')"><i class="fa-regular fa-pen-to-square "></i></a>
+                            </span>
+                        }
+                    </h3>
+                    <form method="post">
+                        <button asp-page-handler="gallery" asp-route-galleryId="@gallery.Id">
+                            <img class="card-img" src="@gallery.DisplayImage" alt="Header image for @gallery.NameOfEvent" />
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/galleryedit.js"></script>
+}

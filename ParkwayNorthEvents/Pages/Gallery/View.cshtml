@@ -1,0 +1,52 @@
+﻿@page
+@using Infrastructure.Utility;
+@model ParkwayNorthEvents.Pages.Gallery.ViewModel
+@{
+}
+
+<div class="container">
+    <div class="pt-lg-3 pb-lg-3">
+        <h1 class="text-center">
+            @Model.SelectedGallery.NameOfEvent
+            @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+            {
+                <form method="post">
+                    <button type="submit" class="btn btn-primary parkwayButton hidden-button" asp-route-id="@Model.SelectedGallery.Id">Add</button>
+                </form>
+            }
+        </h1>
+    </div>
+    <div class="card-columns" style="display: flex; justify-content: space-between; flex-wrap:wrap">
+        @foreach (var image in Model.Images)
+        {
+            <div class="card">
+                <img class="card-img hidden-button" src="@image.Image" alt="Image for @Model.SelectedGallery.NameOfEvent" />
+                @if ((User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole)))
+                {
+                    if (Model.SelectedGallery.DisplayImage != image.Image)
+                    {
+                        <p class="on-hover-card-buttons"><a onClick="DeleteImage('/api/image/@image.Id')"><i class="fa-solid fa-trash fa-xl"></i></a></p>
+                    }
+                    else
+                    {
+                    // replace image
+                        <p class="on-hover-card-buttons"><a onClick="CantDelete()"><i class="fa-solid fa-trash fa-xl"></i></a></p>
+                    }
+                }
+            </div>
+        }
+    </div>
+    <input type="hidden" asp-for="@Model.SelectedGallery.Id" />
+    <form method="post" asp-action="View">
+        <button type="submit" class="btn btn-primary parkwayButton" asp-page-handler="back">Back</button>
+    </form>
+    <form method="post" style="display:none;" asp-action="View" enctype="multipart/form-data">
+        <input id="hiddenInput" class="form-control" type="file" name="fileUpload" accept=".jpg, .jpeg, .png" />
+        <button id="replace" asp-page-handler="replace" asp-route-id="@Model.SelectedGallery.Id.ToString()"></button>
+    </form>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/editimage.js"></script>
+}

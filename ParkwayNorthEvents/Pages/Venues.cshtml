@@ -1,0 +1,73 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.VenuesModel
+@using Infrastructure.Utility;
+
+@{
+}
+@if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.ManagerRole))
+{
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-6">
+                <h2 class="">Venues</h2>
+            </div>
+            <div class="col-6 text-end">
+                <a asp-page="./Admin/VenueUpsert" asp-route-id="0" class="btn btn-primary parkwayButton">
+                    <i class="fas fa-plus"></i>&nbsp;Create New
+                </a>
+            </div>
+        </div>
+        <table id="DT_venues" class="table table-striped table-bordered pt-3 pb-3" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Venue Name</th>
+                    <th>Venue Phone Number</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach(var venue in Model.Venues)
+            {
+                <tr>
+                    <td>@venue.VenueName</td>
+                    <td>@venue.VenuePhoneNumber</td>
+                    <td>
+                        <div class="text-center">
+                            <a href="/Admin/VenueUpsert?id=@venue.VenueId"
+                            class ="btn btn-primary parkwayButton" style="cursor:pointer; min-width: 100px; max-width: 100px;"> <i class="far fa-edit"></i>Edit</a>
+                            <a onClick="Delete('/api/venue/@venue.VenueId')"
+                            class ="btn btn-primary parkwayDeleteButton" style="cursor:pointer; min-width: 100px;  max-width: 100px;"> <i class="far fa-trash-alt"></i>Delete</a>
+                    </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-6">
+                <h2 class="">Venues</h2>
+            </div>
+        </div>
+        <table id="DT_venues" class="table table-striped table-bordered pt-3 pb-3" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Venue Name</th>
+                    <th>Venue Phone Number</th>
+                </tr>
+            </thead>
+            @foreach (var venue in Model.Venues)
+            {
+                <tr>
+                    <td>@venue.VenueName</td>
+                    <td>@venue.VenuePhoneNumber</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+@section Scripts {
+    <script src="~/js/venueupdate.js"></script>
+}

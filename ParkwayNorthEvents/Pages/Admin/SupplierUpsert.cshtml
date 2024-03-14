@@ -1,0 +1,38 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.Admin.SupplierUpsertModel
+@{
+}
+
+<form method="post" asp-action="SupplierUpsert">
+    <div class="container">
+        <div class="form-group row pt-3">
+            <div class="col-2">
+                <label asp-for="SupplierObject.SupplierName"></label>
+            </div>
+            <div class="col-3">
+                <input class="form-control" asp-for="SupplierObject.SupplierName" required />
+            </div>
+            <div class="col-2">
+                <label asp-for="SupplierObject.SupplierPhoneNumber"></label>
+            </div>
+            <div class="col-3">
+                <input class="form-control" asp-for="SupplierObject.SupplierPhoneNumber" required data-val-regex="Please enter valid phone number" data-val-regex-pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" />
+            </div>
+            <input type="hidden" asp-for="SupplierObject.SupplierId" />
+        </div>
+        <div class="form-group row pt-3 pb-3">
+            <div class="col-7">
+            </div>
+            <div class="col-1">
+                <a class="btn btn-primary parkwayButton" asp-page="./Suppliers">Suppliers</a>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-primary parkwayButton" asp-page="./Calendar">Calendar</a>
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn btn-primary parkwaySuccess">Submit</button>
+            </div>
+            
+        </div>
+    </div>
+</form>

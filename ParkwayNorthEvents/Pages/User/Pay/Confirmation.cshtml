@@ -1,0 +1,39 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.User.Pay.ConfirmationModel
+@{
+}
+
+<div class="container">
+    <div class="container">
+        <div class="card">
+            <h1 class="card-title">Payment Successful!</h1>
+            <div class="card-header container">
+                Payment Details
+            </div>
+            <div class="">
+                <form method="post" asp-page-handler="back">
+                    <button type="submit" class="btn btn-primary parkwayButton">Back to event</button>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-info">Payment Details:</span>
+                    </h4>
+                </div>
+                <div class="row">
+                    <label>Name of Event: @Model.SelectedBooking.EventTitle</label>
+                </div>
+                <div class="row">
+                    <label>Payment Date: @Model.Transaction.TransactionDate.ToString("MM/dd/yyyy")</label>
+                </div>
+                <div class="row">
+                    <label>Amount Paid: $@Model.Transaction.TransactionAmount</label>
+                </div>
+                <div class="row">
+                    <label>New Balance: $@Model.SelectedBooking.Balance</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

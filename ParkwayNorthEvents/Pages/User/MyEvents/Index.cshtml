@@ -1,0 +1,23 @@
+﻿@page
+@model ParkwayNorthEvents.Pages.User.MyEvents.IndexModel
+@{
+}
+
+<div class="card">
+    <h3 class="card-title">My events</h3>
+    <div class="card-body">
+        @foreach (var booking in Model.UserBookings)
+        {
+            <a href="/User/MyEvents/Edit?id=@booking.BookingId.ToString()">
+                <div class="card">
+                    <h5 class="card-title">@booking.EventTitle</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            @booking.DateOfEvent
+                        </p>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
