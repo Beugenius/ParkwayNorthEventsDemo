@@ -1,4 +1,5 @@
 # Introduction 
+![]([https://github.com/Your_Repository_Name/Your_GIF_Name.gif](https://github.com/Beugenius/ParkwayNorthEventsDemo/blob/main/ParkwayNorthEvents/wwwroot/pwndemo.gif))
 This is an event coordination application designed to work for both customers and admins. 
 
 As a customer:
